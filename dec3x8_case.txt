@@ -1,0 +1,43 @@
+//Design Code
+module dec3x8(output reg [7:0]out,input [2:0]in);
+  always@*
+    begin
+      case(in)
+        3'b000 : out=8'b00000001;
+        3'b001 : out=8'b00000010;
+        3'b010 : out=8'b00000100;
+        3'b011 : out=8'b00001000;
+        3'b100 : out=8'b00010000;
+        3'b101 : out=8'b00100000;
+        3'b110 : out=8'b01000000;
+        3'b111 : out=8'b10000000;
+       default : out=8'bxxxxxxxx;
+      endcase
+    end
+endmodule
+
+//Test Bench Code
+module test();
+  wire [7:0]out;
+  reg [2:0]in;
+  dec3x8 DUT(out,in);
+  initial
+    begin
+      integer i;
+      for(i=0;i<8;i=i+1)
+        begin
+          {in}=i;
+          #10;
+        end
+    end
+  initial
+    begin
+        $monitor("in=%b,out=%b",in,out);
+    end
+  initial
+    begin
+      $dumpfile("test.vcd");
+      $dumpvars(1);
+    end
+endmodule
+
